@@ -1,0 +1,159 @@
+﻿@model IEnumerable<TaskTracker.Models.Task>
+
+@{
+    ViewData["Title"] = "Task Manager";
+    string[] statuses = (string[])ViewData["ActiveStatuses"] ?? ["Todo", "InProgress", "Done"];
+    string sortBy = (string)ViewData["SortBy"] ?? "Id";
+    string sortingType = (string)ViewData["SortingType"] ?? "Asc";
+}
+
+<div class="text-center">
+    <h1 class="m-3">Task Tracker</h1>
+
+    <a class="btn btn-success mb-3" asp-action="Create">Create New Task</a>
+
+    <form asp-action="Index" method="get" class="position-absolute d-flex align-items-center" style="top:85px; right:35px;">
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" name="statuses" value="Todo" @((Array.IndexOf(statuses, "Todo") != -1) ? "checked" : "")/>
+            <label class="form-check-label">Todo</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" name="statuses" value="InProgress" @((Array.IndexOf(statuses, "InProgress") != -1) ? "checked" : "") />
+            <label class="form-check-label">InProgress</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" name="statuses" value="Done" @((Array.IndexOf(statuses, "Done") != -1) ? "checked" : "") />
+            <label class="form-check-label">Done</label>
+        </div>
+        <input type="hidden" name="sortBy" value="@sortBy" />
+        <input type="hidden" name="sortingType" value="@sortingType" />
+        <button type="submit" class="btn btn-success btn-sm ml-2">Filter Tasks</button>
+    </form>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">
+                    <form asp-action="Index" method="get" class="d-inline">
+                        @foreach(string s in statuses)
+                        {
+                            <input type="hidden" name="statuses" value="@s" />
+                        }
+                        <input type="hidden" name="sortBy" value="@Html.DisplayNameFor(Model => Model.Id)" />
+                        <input type="hidden" name="sortingType" 
+                               value="@( (sortBy == Html.DisplayNameFor(Model => Model.Id)) && (sortingType == "Asc") ? "Desc" : "Asc")" 
+                            />
+                        <button type="submit"
+                                class="@(sortBy == Html.DisplayNameFor(Model => Model.Id) ? "link-danger" : "") border-0 bg-white fw-bold" 
+                                style="width: 120px">
+                            @Html.DisplayNameFor(Model => Model.Id) @(sortBy == Html.DisplayNameFor(Model => Model.Id) ? (sortingType == "Asc" ? "↓" : "↑") : "")
+                        </button>
+                    </form>
+                </th>
+                <th scope="col">
+                    <form asp-action="Index" method="get" class="d-inline">
+                        @foreach (string s in statuses)
+                        {
+                            <input type="hidden" name="statuses" value="@s" />
+                        }
+                        <input type="hidden" name="sortBy" value="@Html.DisplayNameFor(Model => Model.Description)" />
+                        <input type="hidden" name="sortingType"
+                               value="@( (sortBy == Html.DisplayNameFor(Model => Model.Description)) && (sortingType == "Asc") ? "Desc" : "Asc")" />
+                        <button type="submit"
+                                class="@(sortBy == Html.DisplayNameFor(Model => Model.Description) ? "link-danger" : "") border-0 bg-white fw-bold" 
+                                style="width: 120px">
+                            @Html.DisplayNameFor(Model => Model.Description) @(sortBy == Html.DisplayNameFor(Model => Model.Description) ? (sortingType == "Asc" ? "↓" : "↑") : "")
+                        </button>
+                    </form>
+                </th>
+                <th scope="col">
+                    <form asp-action="Index" method="get" class="d-inline">
+                        @foreach (string s in statuses)
+                        {
+                            <input type="hidden" name="statuses" value="@s" />
+                        }
+                        <input type="hidden" name="sortBy" value="@Html.DisplayNameFor(Model => Model.Status)" />
+                        <input type="hidden" name="sortingType"
+                               value="@( (sortBy == Html.DisplayNameFor(Model => Model.Status)) && (sortingType == "Asc") ? "Desc" : "Asc")" />
+                        <button type="submit"
+                                class="@(sortBy == Html.DisplayNameFor(Model => Model.Status) ? "link-danger" : "") border-0 bg-white fw-bold"
+                                style="width: 120px">
+                            @Html.DisplayNameFor(Model => Model.Status) @(sortBy == Html.DisplayNameFor(Model => Model.Status) ? (sortingType == "Asc" ? "↓" : "↑") : "")
+                        </button>
+                    </form>
+                </th>
+                <th scope="col">
+                    <form asp-action="Index" method="get" class="d-inline">
+                        @foreach (string s in statuses)
+                        {
+                            <input type="hidden" name="statuses" value="@s" />
+                        }
+                        <input type="hidden" name="sortBy" value="@Html.DisplayNameFor(Model => Model.CreatedAt)" />
+                        <input type="hidden" name="sortingType"
+                               value="@( (sortBy == Html.DisplayNameFor(Model => Model.CreatedAt)) && (sortingType == "Asc") ? "Desc" : "Asc")" />
+                        <button type="submit"
+                                class="@(sortBy == Html.DisplayNameFor(Model => Model.CreatedAt) ? "link-danger" : "") border-0 bg-white fw-bold"
+                                style="width: 120px">
+                            @Html.DisplayNameFor(Model => Model.CreatedAt) @(sortBy == Html.DisplayNameFor(Model => Model.CreatedAt) ? (sortingType == "Asc" ? "↓" : "↑") : "")
+                        </button>
+                    </form>
+                </th>
+                <th scope="col">
+                    <form asp-action="Index" method="get" class="d-inline">
+                        @foreach (string s in statuses)
+                        {
+                            <input type="hidden" name="statuses" value="@s" />
+                        }
+                        <input type="hidden" name="sortBy" value="@Html.DisplayNameFor(Model => Model.UpdatedAt)" />
+                        <input type="hidden" name="sortingType"
+                               value="@( (sortBy == Html.DisplayNameFor(Model => Model.UpdatedAt)) && (sortingType == "Asc") ? "Desc" : "Asc")" />
+                        <button type="submit"
+                                class="@(sortBy == Html.DisplayNameFor(Model => Model.UpdatedAt) ? "link-danger" : "") border-0 bg-white fw-bold"
+                                style="width: 120px">
+                            @Html.DisplayNameFor(Model => Model.UpdatedAt) @(sortBy == Html.DisplayNameFor(Model => Model.UpdatedAt) ? (sortingType == "Asc" ? "↓" : "↑") : "")
+                        </button>
+                    </form>
+                </th>
+                <th width="30%"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(TaskTracker.Models.Task task in Model)
+            {
+                <tr>
+                    <th class="align-middle" scope="row">@task.Id</th>
+                    <td class="align-middle">@task.Description</td>
+                    <td class="align-middle">@task.Status</td>
+                    <td class="align-middle">@task.CreatedAt</td>
+                    <td class="align-middle">@task.UpdatedAt</td>
+                    <td class="align-middle">
+                        <a class="btn btn-primary m-1" style="width: 100px" asp-action="Update" asp-route-id="@task.Id">Update</a>
+                        <a class="btn btn-danger m-1" style="width: 100px" asp-action="Delete" asp-route-id="@task.Id">Delete</a>
+                        @if(task.Status == TaskTracker.Models.Task.TaskStatus.Todo)
+                        {
+                            <form asp-action="Update" method="post" class="d-inline">
+                                <input type="hidden" name="Id" value="@task.Id" />
+                                <input type="hidden" name="Description" value="@task.Description" />
+                                <input type="hidden" name="Status" value="@TaskTracker.Models.Task.TaskStatus.InProgress" />
+                                <input type="hidden" name="CreatedAt" value="@task.CreatedAt" />
+                                <button type="submit" class="btn btn-warning m-1" style="width: 120px">Start Task</button>
+                            </form>
+                        } else if(task.Status == TaskTracker.Models.Task.TaskStatus.InProgress)
+                        {
+                            <form asp-action="Update" method="post" class="d-inline">
+                                <input type="hidden" name="Id" value="@task.Id" />
+                                <input type="hidden" name="Description" value="@task.Description" />
+                                <input type="hidden" name="Status" value="@TaskTracker.Models.Task.TaskStatus.Done" />
+                                <input type="hidden" name="CreatedAt" value="@task.CreatedAt" />
+                                <button type="submit" class="btn btn-warning m-1" style="width: 120px">Finish Task</button>
+                            </form>
+                        } else
+                        {
+                            <div class="btn btn-warning m-1 invisible disabled" style="width: 120px"></div>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

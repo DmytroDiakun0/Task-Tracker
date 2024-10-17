@@ -1,0 +1,14 @@
+﻿@model TaskTracker.Models.Task
+
+@{
+    ViewData["Title"] = "[DELETE]";
+}
+
+<div class="text-center">
+    <h2 class="d-inline-block m-3">Are you sure you want to delete this task: @Model.Description</h2>
+    <form asp-action="Delete" class="m-3">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Yes" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-primary">No</a>
+    </form>
+</div>

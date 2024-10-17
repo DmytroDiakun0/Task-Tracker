@@ -1,0 +1,23 @@
+﻿@model TaskTracker.Models.Task
+
+@{
+    ViewData["Title"] = "Create Task";
+}
+
+<div>
+    <h1 class="text-center m-3">Create Task</h1>
+    <div class="text-center">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label mb-2"></label>
+                <input asp-for="Description" class="form-control mx-auto mb-1 w-25" />
+                <span asp-validation-for="Description" class="text-danger d-inline-block mb-3"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+                <a class="btn btn-danger" asp-action="Index">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
