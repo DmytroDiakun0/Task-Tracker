@@ -1,2 +1,2 @@
 Simple task tracker
-![screenshot](Application screenshot.png)
+![screenshot](Application%20screenshot.png)
